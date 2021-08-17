@@ -42,7 +42,6 @@ export class PaymentService {
         'Content-Type':  'application/json',
         'Authorization':'Bearer iGSagz8o7sRZV2jT8BKpCz79OkVm1sVEOGwcYJyVO3g',
         'PCCT':pcct,
-        //'Host':'pay.connexpointstage.com',
         'Access-Control-Allow-Origin': '*'
       })
     }
