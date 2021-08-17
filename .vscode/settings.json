@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d57fdbd3-5548-4324-9db5-f9f86fced79b/resourceGroups/mobileweb/providers/Microsoft.Web/sites/MyTestingAppSac",
+    "appService.deploySubpath": "dist\\my-app"
+}

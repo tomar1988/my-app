@@ -1,0 +1,28 @@
+
+<div class="container" role="banner">
+  <form class="payment-form row mt-5">
+    <div class="mb-3">
+      <h2 class="text-primary"> Vanco Payment</h2> 
+    </div>
+    <div class="mb-3">
+      <label for="users" class="form-label">Users</label>
+      <select class="form-select" aria-label="Default select example" name="users" (change)="onChange()" [(ngModel)]="pcct">
+        <option *ngFor="let user of users"  [value]="user.pcct">
+          {{user.customerName}}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="amtTxt" class="form-label">Amount</label>
+      <input type="number"  class="form-control" name="amtTxt" id="amount" pattern="[0-9]*" placeholder="Amount" [(ngModel)]="amount">
+    </div>
+   <div>
+    <button type="submit" class="btn btn-primary" (click)="execute()">{{mybtnTxt}}</button>
+   </div>
+   <a hidden id="link" [attr.href]="downloadURL" [attr.data-applink]="appURL" ></a>
+   <div class="my-5">
+    <h5 class="text-primary">Payment Status:</h5>
+    <h6 class="text-success">{{transactionStatus}}</h6>
+   </div>
+  </form>
+ </div>

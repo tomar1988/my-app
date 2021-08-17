@@ -1,0 +1,13 @@
+.payment-form {
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    margin: 1rem;
+    padding: 1.5rem;
+}
+@media only screen and (min-width: 992px) {
+    .payment-form {
+        width: 50%;
+        margin: auto;
+    }
+} 
+
