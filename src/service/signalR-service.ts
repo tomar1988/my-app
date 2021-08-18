@@ -37,8 +37,9 @@ export class SignalRService {
       });
 
       this.hubConnection.start()
+        .then(() => this.signalInfo.next('Connected'))
         .catch((error: string) => alert(error));
-
+     
       this.hubConnection.serverTimeoutInMilliseconds = 300000;
 
       this.hubConnection.onclose((error) => {

@@ -13,8 +13,12 @@
       </select>
     </div>
     <div class="mb-3">
-      <label for="amtTxt" class="form-label">Amount</label>
-      <input type="number"  class="form-control" name="amtTxt" id="amount" pattern="[0-9]*" placeholder="Amount" [(ngModel)]="amount">
+      <input  type="checkbox"   [(ngModel)]="isRedirect"  [ngModelOptions]="{standalone: true}"/>
+      <label for="redirectTxt" class="form-label ms-3">Redirection Opted</label>
+    </div>
+    <div class="mb-5">
+      <label for="amtTxt" class="form-label" >Amount</label>
+      <input type="number" class="form-control" name="amtTxt" id="amount" pattern="[0-9]*" placeholder="Amount" [(ngModel)]="amount">
     </div>
    <div>
     <button type="submit" class="btn btn-primary" (click)="execute()">{{mybtnTxt}}</button>
