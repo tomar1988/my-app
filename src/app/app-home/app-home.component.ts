@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.signalRService.init(this.pcct);
     this.signalRService.signalInfo.subscribe(data => 
       {
-        if(data = "Connected") {
+        if(data == "Connected") {
           console.log("SignalR Connected successfully");
           this.signalRConnected = true;
           this.createPaymentRequest();
@@ -81,14 +81,17 @@ export class HomeComponent implements OnInit {
         }
        }
       });
-    
   }
 
   execute(){
       console.log("Execute clicked: Started: {0}",this.mybtnTxt);
       if(this.mybtnTxt == "Pay"){
-        if(!this.isRedirect && !this.signalRConnected){this.startSignalRservice();}
-        else{this.createPaymentRequest();}
+        if(!this.isRedirect && !this.signalRConnected){
+          this.startSignalRservice();
+        }
+        else{
+          this.createPaymentRequest();
+        }
       }
       else if(this.mybtnTxt == "Execute"){ this.ExecutePayment(); }
       console.log("Execute clicked: Exited");
@@ -110,12 +113,13 @@ export class HomeComponent implements OnInit {
     let IS_IPHONE = !IS_IPAD && ((agent.match(/iPhone/i) !== null) || (agent.match(/iPod/i) !== null));
     let IS_IOS = IS_IPAD || IS_IPHONE;
     let IS_ANDROID = !IS_IOS && agent.match(/android/i) !== null;
+    let redirectURL: any = this.isRedirect? this.hostURL + window.location.pathname + "?isSuccess=true&message=yourmessage": null;
     if (IS_ANDROID) {
-          this.appURL =`intent:#Intent;action=com.vanco.accept;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;S.pcct=${this.pcct};S.isweb=true;S.paymentRef=${this.paymentRef};S.amount=${this.amount};S.redirectURL=${this.hostURL+"/?isSuccess=true&message=yourmessage"};end`;
+          this.appURL =`intent:#Intent;action=com.vanco.accept;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;S.pcct=${this.pcct};S.isweb=true;S.paymentRef=${this.paymentRef};S.amount=${this.amount};S.redirectURL=${redirectURL};end`;
           this.downloadURL = "https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user";
      } 
     else {
-          this.appURL= `vancoaccept://checkout?paymentRef=${this.paymentRef}&pcct=${this.pcct}&amount=${this.amount}&isWeb=true&redirectURL=${this.hostURL+"/?isSuccess=true&message=yourmessage"}`;
+          this.appURL= `vancoaccept://checkout?paymentRef=${this.paymentRef}&pcct=${this.pcct}&amount=${this.amount}&isWeb=true&redirectURL=${redirectURL}`;
           this.downloadURL = "https://apps.apple.com/us/app/id1193357041";
          }
     setTimeout(() => {
