@@ -45,9 +45,9 @@ export class PaymentService {
         'Access-Control-Allow-Origin': '*'
       })
     }
-    var executeURL = `https://pay.connexpointstage.com/v1/payments/${paymentRef}/execute`
-    const requestPayload = {"amount":amount}
-    return this.http.post(this.url, requestPayload, httpOptions).pipe(catchError(this.handleError));
+    var executeURL = `https://pay.connexpointstage.com/v2/payments/${paymentRef}/execute`
+    const requestPayload = {"amount":String(amount)}
+    return this.http.post(executeURL, requestPayload, httpOptions).pipe(catchError(this.handleError));
   }
 
 
@@ -61,7 +61,7 @@ export class PaymentService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     window.alert(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error.error);
   }
  }
 

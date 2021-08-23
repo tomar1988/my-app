@@ -100,10 +100,20 @@ export class HomeComponent implements OnInit {
   createPaymentRequest(){
     this.paymentService.createPaymentRequest(this.amount,this.pcct).subscribe((res: any) => {
       console.log(res); 
-      const { paymentID, paymentRef, amount,  } = res;
+      const { paymentID, paymentRef, amount,status, message} = res;
       this.paymentRef = paymentRef;
-      this.saveValueToLocalStorage();
-      this.openApp();
+      if(status == "Created"){
+        this.saveValueToLocalStorage();
+        this.openApp();
+      }
+      else{
+          this.transactionStatus = message;
+      }
+    },
+      (error) => {                              //Error callback
+      console.log(error);
+      const {message} = error;
+      this.transactionStatus = message;
     });
   }
 
@@ -132,22 +142,33 @@ export class HomeComponent implements OnInit {
 
   ExecutePayment(){
     this.paymentService.paymentExecute(this.amount, this.pcct, this.paymentRef).subscribe((res: any)=>{
-      this.transactionStatus = "Payment Executed Successfully."     
-      console.log(res); 
-      setTimeout(this.refreshPage,1000)
+      const {status, paymentID,message} = res;
+      if(status == "Success"){
+        this.transactionStatus = "Payment Executed Successfully."     
+        console.log(res); 
+        setTimeout(this.refreshPage,1000)
+      }else{
+        this.transactionStatus = message;
+      }
+    },
+      (error) => {                              //Error callback
+      console.log(error);
+      const {message} = error;
+      this.transactionStatus = message;
     });
   }
   
   onChange() {
     //this.startSignalRservice();
   }
+
   refreshPage() {
   this.isRedirect = false;
   this.amount = 0;
   this.localStorage.clear();
-  window.location.replace(this.hostURL);
+  //window.location.replace(this.hostURL);
   }
-  
+
   saveValueToLocalStorage(){
     this.localStorage.setItem("pcct",this.pcct);
     this.localStorage.setItem("amount",String(this.amount));
