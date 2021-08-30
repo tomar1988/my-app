@@ -5,7 +5,7 @@
             popupDomains: 'facebook|twitter',
             desktop: false,
             delegate: null,
-            timeout: 1500,
+            timeout: 3000,
             data: pluginName
         },
 

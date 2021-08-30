@@ -101,8 +101,9 @@ export class HomeComponent implements OnInit {
     this.paymentService.createPaymentRequest(this.amount,this.pcct).subscribe((res: any) => {
       console.log(res); 
       const { paymentID, paymentRef, amount,status, message} = res;
-      this.paymentRef = paymentRef;
-      if(status == "Created"){
+      if(paymentRef == undefined) { this.paymentRef = res;}
+      else {this.paymentRef = paymentRef;}
+      if(status == "Created" || paymentRef == undefined){
         this.saveValueToLocalStorage();
         this.openApp();
       }
@@ -144,7 +145,7 @@ export class HomeComponent implements OnInit {
     this.paymentService.paymentExecute(this.amount, this.pcct, this.paymentRef).subscribe((res: any)=>{
       const {status, paymentID,message} = res;
       if(status == "Success"){
-        this.transactionStatus = "Payment Executed Successfully."     
+        this.transactionStatus = "Payment Executed Successfully with Payment ID: "+ paymentID;     
         console.log(res); 
         setTimeout(this.refreshPage,1000)
       }else{
