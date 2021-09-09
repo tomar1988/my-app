@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
    vancoPartnerMessage: any = "";
    signalRConnected : boolean = false;
    hostURL : string = window.location.origin; 
+   loading = false;
 
   constructor(private paymentService: PaymentService, 
     private signalRService: SignalRService,
@@ -85,6 +86,7 @@ export class HomeComponent implements OnInit {
 
   execute(){
       console.log("Execute clicked: Started: {0}",this.mybtnTxt);
+      this.loading = true;
       if(this.mybtnTxt == "Pay"){
         if(!this.isRedirect && !this.signalRConnected){
           this.startSignalRservice();
@@ -110,9 +112,11 @@ export class HomeComponent implements OnInit {
       else{
           this.transactionStatus = message;
       }
+      this.loading = false;
     },
       (error) => {                              //Error callback
       console.log(error);
+      this.loading = false;
       const {message} = error;
       this.transactionStatus = message;
     });
@@ -144,6 +148,7 @@ export class HomeComponent implements OnInit {
   ExecutePayment(){
     this.paymentService.paymentExecute(this.amount, this.pcct, this.paymentRef).subscribe((res: any)=>{
       const {status, paymentID,message} = res;
+      this.loading = false;  
       if(status == "Success"){
         this.transactionStatus = "Payment Executed Successfully with Payment ID: "+ paymentID;     
         console.log(res); 
@@ -152,7 +157,8 @@ export class HomeComponent implements OnInit {
         this.transactionStatus = message;
       }
     },
-      (error) => {                              //Error callback
+      (error) => {     
+      this.loading = false;                         //Error callback
       console.log(error);
       const {message} = error;
       this.transactionStatus = message;

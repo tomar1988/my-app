@@ -21,7 +21,10 @@
       <input type="number" class="form-control" name="amtTxt" id="amount" pattern="[0-9]*" placeholder="Amount" [(ngModel)]="amount">
     </div>
    <div>
-    <button type="submit" class="btn btn-primary" (click)="execute()">{{mybtnTxt}}</button>
+    <button type="submit" class="btn btn-primary" (click)="execute()">
+      {{mybtnTxt}}
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+    </button>
    </div>
    <a hidden id="link" [attr.href]="downloadURL" [attr.data-applink]="appURL" ></a>
    <div class="my-5">
